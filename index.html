@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatika SMK Kriya Kulit - Sistem Komputer & Hardware</title>
+    
+    <style>
+        /* Modern Design Tokens & Variables */
+        :root {
+            --primary: #0F172A;        /* Deep Navy Blue */
+            --primary-blue: #1E3A8A;   /* Navy Accent */
+            --primary-subtle: #1E293B; /* Slate Dark */
+            --accent-gold: #D97706;    /* Amber Leather */
+            --accent-gold-bright: #F59E0B; /* Bright Gold */
+            --accent-gold-light: #FEF3C7;  /* Light Gold Tint */
+            --bg-light: #F8FAFC;       /* Off-white Background */
+            --card-bg: #FFFFFF;        /* Pure White */
+            --text-main: #1E293B;      /* Dark Text */
+            --text-muted: #64748B;     /* Muted Gray Text */
+            --danger-color: #DC2626;   /* Alert Red */
+            --danger-light: #FEF2F2;   /* Red Light Tint */
+            --success-color: #16A34A;  /* Success Green */
+            --success-light: #DCFCE7; /* Green Light Tint */
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: #E2E8F0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 25%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-bright));
+            transition: width 0.4s ease;
+        }
+
+        /* Sticky Navigation Bar */
+        header {
+            position: sticky;
+            top: 6px;
+            z-index: 999;
+            background-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 1.5rem;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 1.15rem;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-bright));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-btn:hover {
+            color: #FFFFFF;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            background-color: var(--accent-gold-bright);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Layout & Container */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card System */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid #E2E8F0;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 0.75rem;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* Highlight Boxes */
+        .info-box {
+            background-color: #F0F9FF;
+            border-left: 4px solid var(--primary-blue);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 0.75rem;
+        }
+
+        .craft-accent-box {
+            background-color: var(--accent-gold-light);
+            border-left: 4px solid var(--accent-gold);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 0.75rem;
+            color: #78350F;
+        }
+
+        /* Interactive Trigger Question Cards */
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .trigger-card {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .trigger-card:hover {
+            border-color: var(--accent-gold);
+            background: #FFFFFF;
+        }
+
+        .trigger-card h4 {
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+
+        .trigger-card .toggle-icon {
+            color: var(--accent-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .trigger-card.open .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .hint-content {
+            display: none;
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px dashed #CBD5E1;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .trigger-card.open .hint-content {
+            display: block;
+        }
+
+        /* Problem Orientation Section */
+        .problem-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.25rem;
+            background: linear-gradient(180deg, #FFFFFF, #F1F5F9);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 2px dashed #CBD5E1;
+        }
+
+        .problem-illustration {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-bright));
+            color: var(--primary);
+            font-weight: 700;
+            border: none;
+            padding: 0.85rem 1.75rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(217, 119, 6, 0.4);
+        }
+
+        .checklist-box {
+            display: none;
+            width: 100%;
+            background: #FFFFFF;
+            border-radius: 10px;
+            padding: 1.25rem;
+            border: 1px solid #E2E8F0;
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Flow Diagram Section */
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: #F8FAFC;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            padding: 0.85rem 1rem;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Grid Props Cards */
+        .props-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .prop-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .prop-card h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* K3 Alert Box */
+        .k3-alert-box {
+            background-color: var(--danger-light);
+            border: 2px dashed var(--danger-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .k3-alert-box h3 {
+            color: var(--danger-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .k3-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .k3-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: #7F1D1D;
+            font-weight: 500;
+        }
+
+        .k3-checkbox-wrapper {
+            background: #FFFFFF;
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 2px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            cursor: pointer;
+        }
+
+        .k3-checkbox-wrapper input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--accent-gold);
+            cursor: pointer;
+        }
+
+        /* Quiz & Post-Test Styles */
+        .quiz-item {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-label:hover {
+            background-color: #F1F5F9;
+            border-color: var(--primary-blue);
+        }
+
+        .option-label input[type="radio"] {
+            accent-color: var(--primary-blue);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Quiz Result Box */
+        .result-card {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: #FFFFFF;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 2px solid #E2E8F0;
+            margin-top: 1.5rem;
+        }
+
+        .score-display {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge-success {
+            background-color: var(--success-light);
+            color: var(--success-color);
+        }
+
+        .badge-warning {
+            background-color: #FEF3C7;
+            color: #D97706;
+        }
+
+        /* Review Section */
+        .review-box {
+            text-align: left;
+            margin-top: 2rem;
+            border-top: 2px solid #E2E8F0;
+            padding-top: 1.5rem;
+        }
+
+        .review-item {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .review-item.correct {
+            background-color: var(--success-light);
+            border: 1px solid #86EFAC;
+        }
+
+        .review-item.incorrect {
+            background-color: var(--danger-light);
+            border: 1px solid #FCA5A5;
+        }
+
+        /* Nav Footer Buttons */
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #CBD5E1;
+        }
+
+        .btn-secondary {
+            background-color: #E2E8F0;
+            color: var(--primary-subtle);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #CBD5E1;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-blue);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                padding: 1rem;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .props-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-logo span {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="brand-logo" onclick="navigateTo('home'); return false;">
+                <div class="brand-icon">🎨</div>
+                <span>Informatika - Kriya Kulit</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">☰</button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><button class="nav-btn active" onclick="navigateTo('home')">🏠 Home</button></li>
+                <li><button class="nav-btn" onclick="navigateTo('materi')">📘 Materi</button></li>
+                <li><button class="nav-btn" onclick="navigateTo('k3')">⚠️ K3 Praktik</button></li>
+                <li><button class="nav-btn" onclick="navigateTo('posttest')">📝 Post-Test</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Dynamic Single Page Container -->
+    <main>
+
+        <!-- ====================================================
+             1. HALAMAN HOME (PENGANTAR & ORIENTASI MASALAH)
+             ==================================================== -->
+        <section id="home" class="page-section active">
+            
+            <!-- A. Apersepsi -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">🔙</span>
+                    <h2 class="section-title">Mengingat Kembali</h2>
+                </div>
+                <p>Pada pertemuan sebelumnya, kita telah mempelajari tentang struktur data dan algoritma sederhana. Komputer dapat menjalankan algoritma tersebut karena didukung oleh suatu sistem yang saling terhubung secara harmonis.</p>
+                <div class="info-box">
+                    <strong>Pertanyaan Refleksi:</strong><br>
+                    "Menurutmu, apa saja yang dibutuhkan agar sebuah komputer dapat menjalankan algoritma dan menyala dengan baik?"
+                </div>
+            </div>
+
+            <!-- B. Integrasi Materi Baru -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">📘</span>
+                    <h2 class="section-title">Materi Hari Ini</h2>
+                </div>
+                <p>Hari ini kita akan mempelajari <strong>Mengenal Sistem Komputer dengan Fokus Hardware</strong>. Kita akan memahami pengertian sistem komputer, tiga syarat sistem komputer (hardware, software, brainware), serta mengidentifikasi komponen hardware (input, proses, output, penyimpanan) yang ada di sekitar kita.</p>
+            </div>
+
+            <!-- C. Motivasi Kriya Kulit -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">💡</span>
+                    <h2 class="section-title">Mengapa Ini Penting bagi Siswa Kriya Kulit?</h2>
+                </div>
+                <p>Di era digital ini, komputer menjadi alat vital dalam industri kriya kulit. Mulai dari mendesain pola tas, sepatu, dompet secara presisi dengan software CAD/Vector, hingga mengelola bisnis online karya kalian.</p>
+                <div class="craft-accent-box">
+                    <strong>Peluang Karir & Dunia Kerja:</strong> Dengan memahami hardware, kalian akan lebih siap menghadapi dunia kerja profesional di bidang kriya kulit modern, termasuk memilih perangkat komputasi yang tangguh untuk proses render desain 2D/3D.
+                </div>
+            </div>
+
+            <!-- D. Pertanyaan Pemantik -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">❓</span>
+                    <h2 class="section-title">Pertanyaan Pemantik</h2>
+                </div>
+                <p>Klik kartu di bawah ini untuk melihat petunjuk dan penjelasannya:</p>
+                
+                <div class="question-grid">
+                    <div class="trigger-card" onclick="toggleHint(this)">
+                        <h4>1. Apa itu sistem? <span class="toggle-icon">+</span></h4>
+                        <div class="hint-content">
+                            Sistem adalah kumpulan elemen atau komponen yang saling berkaitan dan bekerja sama secara teratur untuk mencapai satu tujuan tertentu.
+                        </div>
+                    </div>
+
+                    <div class="trigger-card" onclick="toggleHint(this)">
+                        <h4>2. Apa itu komputer? <span class="toggle-icon">+</span></h4>
+                        <div class="hint-content">
+                            Komputer adalah perangkat elektronik yang menerima data masukan (input), mengolahnya (proses), dan menghasilkan informasi (output) secara cepat dan tepat.
+                        </div>
+                    </div>
+
+                    <div class="trigger-card" onclick="toggleHint(this)">
+                        <h4>3. Apa yang dibutuhkan agar komputer menyala? <span class="toggle-icon">+</span></h4>
+                        <div class="hint-content">
+                            Dibutuhkan 3 syarat utama: Perangkat Keras (Hardware), Perangkat Lunak (Software), dan Pengguna (Brainware). Tanpa salah satunya, komputer tidak dapat beroperasi.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E. Orientasi Masalah (Problem-Based Learning) -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">🔍</span>
+                    <h2 class="section-title">Orientasi Masalah (Studi Kasus)</h2>
+                </div>
+                
+                <div class="problem-wrapper">
+                    <!-- Inline SVG Graphics for Broken PC -->
+                    <svg class="problem-illustration" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="10" width="160" height="110" rx="8" fill="#1E293B" stroke="#475569" stroke-width="4"/>
+                        <rect x="30" y="20" width="140" height="90" rx="4" fill="#0F172A"/>
+                        <path d="M70 120L60 145H140L130 120H70Z" fill="#475569"/>
+                        <rect x="50" y="145" width="100" height="8" rx="2" fill="#334155"/>
+                        <!-- Warning Symbol -->
+                        <path d="M100 35L125 80H75L100 35Z" fill="#EF4444" stroke="#FEF2F2" stroke-width="2"/>
+                        <text x="100" y="72" font-family="sans-serif" font-weight="bold" font-size="20" fill="#FFFFFF" text-anchor="middle">!</text>
+                        <text x="100" y="102" font-family="sans-serif" font-size="10" fill="#94A3B8" text-anchor="middle">NO SIGNAL / POWER OFF</text>
+                    </svg>
+
+                    <h3 style="color: var(--primary);">"Mengapa komputer studio desain ini tidak bisa menyala? Apa saja kemungkinan penyebabnya?"</h3>
+                    <p style="color: var(--text-muted); max-width: 600px;">Bayangkan saat kalian ingin membuat pola dompet kulit digital, tiba-tiba komputer di lab tidak merespons sama sekali saat tombol power ditekan.</p>
+
+                    <button class="action-btn" onclick="toggleProblemChecklist()">
+                        <span>💬</span> Diskusikan dengan Kelompokmu & Buka Checklist Troubleshooting
+                    </button>
+
+                    <div class="checklist-box" id="problemChecklist">
+                        <h4 style="color: var(--primary); margin-bottom: 0.75rem;">📋 Checklist Kemungkinan Penyebab Hardware:</h4>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="chk1">
+                            <label for="chk1"><strong>Cek Kabel Power:</strong> Apakah kabel daya terhubung rapat ke stopkontak listrik?</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="chk2">
+                            <label for="chk2"><strong>Cek Power Supply Unit (PSU):</strong> Apakah sakelar PSU di belakang casing pada posisi ON?</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="chk3">
+                            <label for="chk3"><strong>Cek Modul RAM:</strong> Apakah memori terpasang dengan pas di slot motherboard?</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="chk4">
+                            <label for="chk4"><strong>Cek Motherboard & CPU:</strong> Apakah indikator LED motherboard menyala?</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="chk5">
+                            <label for="chk5"><strong>Cek Kabel Monitor / VGA:</strong> Apakah kabel video terhubung erat dari PC ke layar monitor?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Page Navigation -->
+            <div class="page-navigation">
+                <button class="btn-secondary" disabled>← Sebelumnya</button>
+                <button class="btn-primary" onclick="navigateTo('materi')">Selanjutnya: Halaman Materi →</button>
+            </div>
+
+        </section>
+
+        <!-- ====================================================
+             2. HALAMAN MATERI
+             ==================================================== -->
+        <section id="materi" class="page-section">
+            
+            <!-- A. Pengertian Sistem Komputer -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">🖥️</span>
+                    <h2 class="section-title">Pengertian Sistem Komputer</h2>
+                </div>
+                <p class="info-box" style="font-size: 1.05rem;">
+                    <strong>Sistem Komputer</strong> adalah kumpulan elemen terintegrasi (Hardware, Software, dan Brainware) yang saling berhubungan dan bekerja sama secara sistematis untuk mengolah data masukan menjadi informasi yang berguna bagi pengguna.
+                </p>
+            </div>
+
+            <!-- B. Tiga Syarat Utama & Flowchart SVG -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">⚙️</span>
+                    <h2 class="section-title">Tiga Syarat Utama Sistem Komputer</h2>
+                </div>
+
+                <div class="question-grid">
+                    <div class="prop-card" style="border-top-color: #3B82F6;">
+                        <h4>💻 1. Hardware</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Perangkat keras komputer yang memiliki bentuk fisik nyata, dapat dilihat, dipegang, dan diraba secara langsung.</p>
+                    </div>
+                    <div class="prop-card" style="border-top-color: #10B981;">
+                        <h4>💾 2. Software</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Perangkat lunak berupa sekumpulan instruksi, program, atau data komputer yang menjalankan hardware.</p>
+                    </div>
+                    <div class="prop-card" style="border-top-color: var(--accent-gold);">
+                        <h4>👨‍💻 3. Brainware</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Manusia atau pengguna yang mengoperasikan, mengatur, dan memberi perintah pada sistem komputer.</p>
+                    </div>
+                </div>
+
+                <!-- Interactive SVG Diagram showing relationship -->
+                <div class="diagram-container">
+                    <svg viewBox="0 0 500 200" width="100%" height="auto" style="max-width: 500px;">
+                        <!-- Connection Lines -->
+                        <path d="M 120 100 L 250 50 L 380 100 L 250 150 Z" fill="none" stroke="#CBD5E1" stroke-width="3" stroke-dasharray="6"/>
+                        
+                        <!-- Arrows -->
+                        <polygon points="245,52 255,48 250,58" fill="#1E3A8A"/>
+                        <polygon points="375,95 385,105 375,105" fill="#D97706"/>
+                        <polygon points="255,148 245,152 250,142" fill="#16A34A"/>
+
+                        <!-- Nodes -->
+                        <!-- Brainware -->
+                        <g transform="translate(250, 40)">
+                            <rect x="-60" y="-20" width="120" height="40" rx="8" fill="#1E3A8A"/>
+                            <text x="0" y="5" font-family="sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">👨‍💻 Brainware</text>
+                        </g>
+                        <!-- Hardware -->
+                        <g transform="translate(100, 110)">
+                            <rect x="-60" y="-20" width="120" height="40" rx="8" fill="#D97706"/>
+                            <text x="0" y="5" font-family="sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">💻 Hardware</text>
+                        </g>
+                        <!-- Software -->
+                        <g transform="translate(400, 110)">
+                            <rect x="-60" y="-20" width="120" height="40" rx="8" fill="#16A34A"/>
+                            <text x="0" y="5" font-family="sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">💾 Software</text>
+                        </g>
+
+                        <!-- Center Label -->
+                        <circle cx="250" cy="100" r="28" fill="#FFFFFF" stroke="#0F172A" stroke-width="2"/>
+                        <text x="250" y="98" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0F172A" text-anchor="middle">SISTEM</text>
+                        <text x="250" y="108" font-family="sans-serif" font-size="8" fill="#64748B" text-anchor="middle">Saling Terhubung</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- C. Klasifikasi Hardware -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">📊</span>
+                    <h2 class="section-title">Klasifikasi Hardware Komputer</h2>
+                </div>
+                <p>Hardware dikelompokkan berdasarkan peranannya dalam siklus pengolahan data:</p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kategori</th>
+                                <th>Contoh Komponen</th>
+                                <th>Fungsi Utama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Input (Masukan)</strong></td>
+                                <td>Keyboard, Mouse, Scanner Pattern, Drawing Tablet, Microphone</td>
+                                <td>Memasukkan data atau perintah dari luar ke dalam sistem komputer.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Proses (Processing)</strong></td>
+                                <td>CPU (Processor), RAM, Motherboard</td>
+                                <td>Mengolah, menganalisis, dan mengeksekusi instruksi data yang masuk.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Output (Keluaran)</strong></td>
+                                <td>Monitor, Printer Laser/Pattern Plotter, Speaker</td>
+                                <td>Menampilkan atau mencetak hasil olahan data menjadi informasi visual/fisik.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Storage (Penyimpanan)</strong></td>
+                                <td>SSD (Solid State Drive), HDD, Flashdisk</td>
+                                <td>Menyimpan file sistem, program aplikasi, dan data digital secara permanen/sementara.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Perangkat Tambahan</strong></td>
+                                <td>VGA Card (GPU), Sound Card, Network Card (NIC)</td>
+                                <td>Meningkatkan performa grafis, audio, atau konektivitas jaringan komputer.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- D. Ulasan Komponen Alat Peraga -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">🔍</span>
+                    <h2 class="section-title">Komponen Utama Alat Peraga Hardware</h2>
+                </div>
+
+                <div class="props-grid">
+                    <div class="prop-card">
+                        <h4>⚡ RAM (Random Access Memory)</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Menyimpan data dan instruksi sementara yang sedang diproses oleh CPU. Sifatnya *volatile* (data hilang saat mati).</p>
+                    </div>
+                    <div class="prop-card">
+                        <h4>🧠 Prosesor (CPU)</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Otak komputer yang mengendalikan seluruh operasi, melakukan perhitungan matematika, dan logika sistem.</p>
+                    </div>
+                    <div class="prop-card">
+                        <h4>🗄️ HDD / SSD Storage</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Media penyimpanan permanen (*non-volatile*) untuk menyimpan OS, software desain, dan file pola karya kulit.</p>
+                    </div>
+                    <div class="prop-card">
+                        <h4>🔌 Mainboard (Motherboard)</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Papan sirkuit utama tempat menghubungkan seluruh komponen hardware (CPU, RAM, Storage, GPU, Power Supply).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E. Relevansi dengan Kriya Kulit -->
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">🎨</span>
+                    <h2 class="section-title">Kaitan dengan Industri Kriya Kulit</h2>
+                </div>
+                <div class="craft-accent-box">
+                    <p>Dalam industri kriya kulit modern, komputer digunakan untuk mendesain pola digital tas, ukiran dompet, sepatu, mengelola stok bahan baku, hingga memasarkan produk secara e-commerce. Hardware yang mumpuni (RAM kapasitas besar & processor berkecepatan tinggi) sangat dibutuhkan agar software desain grafis vector/CAD berjalan cepat tanpa kendala.</p>
+                </div>
+            </div>
+
+            <!-- Section Page Navigation -->
+            <div class="page-navigation">
+                <button class="btn-secondary" onclick="navigateTo('home')">← Sebelumnya: Home</button>
+                <button class="btn-primary" onclick="navigateTo('k3')">Selanjutnya: Aturan K3 Praktik →</button>
+            </div>
+
+        </section>
+
+        <!-- ====================================================
+             3. HALAMAN K3 (KESELAMATAN DAN KESEHATAN KERJA)
+             ==================================================== -->
+        <section id="k3" class="page-section">
+            
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">⚠️</span>
+                    <h2 class="section-title">Prosedur Keselamatan & Kesehatan Kerja (K3)</h2>
+                </div>
+                <p style="margin-bottom: 1rem;">Sebelum melakukan praktik perakitan atau identifikasi fisik alat peraga hardware komputer, setiap siswa <strong>wajib mematuhi 6 aturan keselamatan kerja</strong> berikut:</p>
+
+                <div class="k3-alert-box">
+                    <h3>🛑 Wajib Dibaca & Dipatuhi Sebelum Memegang Alat Peraga:</h3>
+                    <ul class="k3-list">
+                        <li>
+                            <span>1.</span>
+                            <div>Pastikan kedua tangan dalam keadaan <strong>benar-benar kering</strong> dan bebas dari minyak atau cairan bahan penyamak kulit.</div>
+                        </li>
+                        <li>
+                            <span>2.</span>
+                            <div>Pastikan stopkontak daya CPU / PC sudah <strong>terlepas total dari aliran listrik</strong> sebelum membuka casing atau memegang komponen internal.</div>
+                        </li>
+                        <li>
+                            <span>3.</span>
+                            <div>Saat memegang papan PCB (seperti RAM atau VGA Card), <strong>peganglah pada bagian tepi/ujung plastik</strong>. Dilarang menyentuh pin emas, kakisirkuit, atau chip IC secara langsung!</div>
+                        </li>
+                        <li>
+                            <span>4.</span>
+                            <div>Letakkan komponen hardware di atas <strong>alas lembut antistatis yang kering</strong> (kertas/matras), bukan langsung di lantai atau meja basah.</div>
+                        </li>
+                        <li>
+                            <span>5.</span>
+                            <div>Selalu jaga komponen agar <strong>tidak terjatuh, ditekan kuat, atau dibengkokkan</strong> karena pin dan sirkuit mikronya sangat rentan patah.</div>
+                        </li>
+                        <li>
+                            <span>6.</span>
+                            <div>Segera laporkan kepada guru pembimbing jika terdapat komponen yang retak, terjatuh, tercium bau sangit, ataupun ada siswa yang terluka.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Interactive K3 Readiness Checkbox -->
+                <div class="k3-checkbox-wrapper" onclick="toggleK3Agreement()">
+                    <input type="checkbox" id="k3AgreeCheckbox" onchange="checkK3State()">
+                    <label for="k3AgreeCheckbox" style="cursor: pointer; font-weight: 600; color: var(--primary);">
+                        Saya telah membaca, memahami, dan siap mematuhi seluruh Aturan K3 Praktik Hardware Komputer ini.
+                    </label>
+                </div>
+            </div>
+
+            <!-- Section Page Navigation -->
+            <div class="page-navigation">
+                <button class="btn-secondary" onclick="navigateTo('materi')">← Sebelumnya: Materi</button>
+                <button class="btn-primary" id="k3NextBtn" onclick="navigateTo('posttest')">Selanjutnya: Kerjakan Post-Test →</button>
+            </div>
+
+        </section>
+
+        <!-- ====================================================
+             4. HALAMAN ASESMEN AKHIR (POST-TEST)
+             ==================================================== -->
+        <section id="posttest" class="page-section">
+            
+            <div class="card">
+                <div class="section-header">
+                    <span style="font-size: 1.5rem;">📝</span>
+                    <h2 class="section-title">Asesmen Akhir (Post-Test Hardware Komputer)</h2>
+                </div>
+                <p style="margin-bottom: 1.5rem;">Uji pemahamanmu tentang sistem komputer dan hardware dengan menjawab 10 pertanyaan pilihan ganda berikut. Pilih satu jawaban yang paling tepat!</p>
+
+                <!-- Post-Test Quiz Container -->
+                <form id="quizForm">
+                    
+                    <!-- Question 1 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">1. Kumpulan elemen yang saling terhubung dan bekerja sama untuk mengolah data menjadi informasi disebut...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q1" value="A"> A. Sistem operasi</label>
+                            <label class="option-label"><input type="radio" name="q1" value="B"> B. Sistem komputer</label>
+                            <label class="option-label"><input type="radio" name="q1" value="C"> C. Jaringan komputer</label>
+                            <label class="option-label"><input type="radio" name="q1" value="D"> D. Program aplikasi</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">2. Berikut ini yang termasuk tiga syarat utama sistem komputer adalah...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q2" value="A"> A. Hardware, software, brainware</label>
+                            <label class="option-label"><input type="radio" name="q2" value="B"> B. Input, proses, output</label>
+                            <label class="option-label"><input type="radio" name="q2" value="C"> C. CPU, RAM, HDD</label>
+                            <label class="option-label"><input type="radio" name="q2" value="D"> D. Monitor, keyboard, mouse</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">3. Perangkat keras komputer yang berfungsi untuk memasukkan data disebut...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q3" value="A"> A. Perangkat output</label>
+                            <label class="option-label"><input type="radio" name="q3" value="B"> B. Perangkat proses</label>
+                            <label class="option-label"><input type="radio" name="q3" value="C"> C. Perangkat input</label>
+                            <label class="option-label"><input type="radio" name="q3" value="D"> D. Perangkat penyimpanan</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">4. Berikut ini yang termasuk perangkat output adalah...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q4" value="A"> A. Keyboard dan mouse</label>
+                            <label class="option-label"><input type="radio" name="q4" value="B"> B. Monitor dan printer</label>
+                            <label class="option-label"><input type="radio" name="q4" value="C"> C. CPU dan RAM</label>
+                            <label class="option-label"><input type="radio" name="q4" value="D"> D. HDD dan SSD</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">5. Fungsi utama CPU (Central Processing Unit) adalah...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q5" value="A"> A. Menyimpan data secara permanen</label>
+                            <label class="option-label"><input type="radio" name="q5" value="B"> B. Menampilkan gambar ke layar</label>
+                            <label class="option-label"><input type="radio" name="q5" value="C"> C. Memproses dan mengolah data</label>
+                            <label class="option-label"><input type="radio" name="q5" value="D"> D. Menghubungkan komputer ke internet</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">6. Manusia yang mengoperasikan dan menggunakan komputer disebut...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q6" value="A"> A. Hardware</label>
+                            <label class="option-label"><input type="radio" name="q6" value="B"> B. Software</label>
+                            <label class="option-label"><input type="radio" name="q6" value="C"> C. Brainware</label>
+                            <label class="option-label"><input type="radio" name="q6" value="D"> D. Malware</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">7. Perangkat yang berfungsi menyimpan data secara permanen adalah...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q7" value="A"> A. RAM</label>
+                            <label class="option-label"><input type="radio" name="q7" value="B"> B. CPU</label>
+                            <label class="option-label"><input type="radio" name="q7" value="C"> C. HDD / SSD</label>
+                            <label class="option-label"><input type="radio" name="q7" value="D"> D. VGA Card</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">8. Berikut ini yang termasuk contoh software sistem operasi adalah...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q8" value="A"> A. Microsoft Word</label>
+                            <label class="option-label"><input type="radio" name="q8" value="B"> B. Windows</label>
+                            <label class="option-label"><input type="radio" name="q8" value="C"> C. Canva</label>
+                            <label class="option-label"><input type="radio" name="q8" value="D"> D. Adobe Photoshop</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">9. Yang akan terjadi jika sebuah komputer tidak memiliki brainware adalah...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q9" value="A"> A. Komputer tetap berjalan normal</label>
+                            <label class="option-label"><input type="radio" name="q9" value="B"> B. Komputer tidak dapat dioperasikan</label>
+                            <label class="option-label"><input type="radio" name="q9" value="C"> C. Komputer menjadi lebih cepat</label>
+                            <label class="option-label"><input type="radio" name="q9" value="D"> D. Software otomatis terinstall</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="quiz-item">
+                        <div class="quiz-question">10. Urutan proses kerja komputer yang benar adalah...</div>
+                        <div class="options-group">
+                            <label class="option-label"><input type="radio" name="q10" value="A"> A. Output → Proses → Input</label>
+                            <label class="option-label"><input type="radio" name="q10" value="B"> B. Proses → Input → Output</label>
+                            <label class="option-label"><input type="radio" name="q10" value="C"> C. Input → Proses → Output</label>
+                            <label class="option-label"><input type="radio" name="q10" value="D"> D. Input → Output → Proses</label>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <button type="button" class="action-btn" onclick="submitPostTest()">
+                            <span>📊</span> Kumpulkan Jawaban & Lihat Skor
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Post-Test Result Box -->
+                <div class="result-card" id="resultCard">
+                    <h3>Hasil Post-Test Informatika</h3>
+                    <p style="color: var(--text-muted);">Materi: Mengenal Sistem Komputer (Fokus Hardware)</p>
+
+                    <div class="score-display" id="scoreDisplay">0</div>
+
+                    <div id="badgeContainer"></div>
+
+                    <div class="review-box" id="reviewContainer">
+                        <h4 style="margin-bottom: 1rem; color: var(--primary);">Pembahasan & Kunci Jawaban:</h4>
+                        <!-- Dynamic Reviews appended here -->
+                    </div>
+
+                    <button class="btn-secondary" style="margin-top: 1.5rem;" onclick="resetQuiz()">
+                        🔄 Ulangi Tes Post-Test
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Section Page Navigation -->
+            <div class="page-navigation">
+                <button class="btn-secondary" onclick="navigateTo('k3')">← Sebelumnya: Aturan K3</button>
+                <button class="btn-primary" onclick="navigateTo('home')">Selesai & Kembali ke Home 🏠</button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        /* ====================================================
+           JAVASCRIPT LOGIC - SPA ROUTER & INTERACTION HANDLERS
+           ==================================================== */
+
+        // Correct Answer Key Mapping
+        const answerKey = {
+            q1: "B",
+            q2: "A",
+            q3: "C",
+            q4: "B",
+            q5: "C",
+            q6: "C",
+            q7: "C",
+            q8: "B",
+            q9: "B",
+            q10: "C"
+        };
+
+        const questionTexts = {
+            q1: "1. Kumpulan elemen yang saling terhubung untuk mengolah data",
+            q2: "2. Tiga syarat utama sistem komputer",
+            q3: "3. Perangkat keras untuk memasukkan data",
+            q4: "4. Perangkat output",
+            q5: "5. Fungsi utama CPU",
+            q6: "6. Manusia yang mengoperasikan komputer",
+            q7: "7. Perangkat menyimpan data permanen",
+            q8: "8. Contoh software sistem operasi",
+            q9: "9. Jika komputer tidak memiliki brainware",
+            q10: "10. Urutan proses kerja komputer yang benar"
+        };
+
+        // DOM Element References
+        const sections = document.querySelectorAll('.page-section');
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const progressBar = document.getElementById('progressBar');
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        // Toggle Mobile Menu
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Navigation Router Function
+        function navigateTo(sectionId) {
+            // Hide mobile nav if expanded
+            navLinks.classList.remove('show');
+
+            // Toggle Page Visibility
+            sections.forEach(sec => {
+                if (sec.id === sectionId) {
+                    sec.classList.add('active');
+                } else {
+                    sec.classList.remove('active');
+                }
+            });
+
+            // Update Active Nav Button
+            navBtns.forEach(btn => {
+                if (btn.getAttribute('onclick').includes(sectionId)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update Top Progress Bar Progress
+            let progressWidth = '25%';
+            switch(sectionId) {
+                case 'home': progressWidth = '25%'; break;
+                case 'materi': progressWidth = '50%'; break;
+                case 'k3': progressWidth = '75%'; break;
+                case 'posttest': progressWidth = '100%'; break;
+            }
+            progressBar.style.width = progressWidth;
+
+            // Scroll Smooth to Top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Trigger Card Hint
+        function toggleHint(card) {
+            card.classList.toggle('open');
+        }
+
+        // Toggle Problem Checklist Display
+        function toggleProblemChecklist() {
+            const box = document.getElementById('problemChecklist');
+            if (box.style.display === 'block') {
+                box.style.display = 'none';
+            } else {
+                box.style.display = 'block';
+            }
+        }
+
+        // K3 Agreement Handlers
+        function toggleK3Agreement() {
+            const checkbox = document.getElementById('k3AgreeCheckbox');
+            checkbox.checked = !checkbox.checked;
+            checkK3State();
+        }
+
+        function checkK3State() {
+            const checkbox = document.getElementById('k3AgreeCheckbox');
+            const k3NextBtn = document.getElementById('k3NextBtn');
+            if (checkbox.checked) {
+                k3NextBtn.style.opacity = '1';
+                k3NextBtn.style.cursor = 'pointer';
+            }
+        }
+
+        // Post-Test Submission & Automatic Grading Logic
+        function submitPostTest() {
+            const form = document.getElementById('quizForm');
+            let score = 0;
+            let answeredCount = 0;
+            const reviewContainer = document.getElementById('reviewContainer');
+            
+            // Clear previous reviews
+            reviewContainer.innerHTML = '<h4 style="margin-bottom: 1rem; color: var(--primary);">Pembahasan & Review Jawaban:</h4>';
+
+            for (let i = 1; i <= 10; i++) {
+                const qKey = 'q' + i;
+                const selectedOption = form.querySelector(`input[name="${qKey}"]:checked`);
+                const keyCorrect = answerKey[qKey];
+
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'review-item';
+
+                if (selectedOption) {
+                    answeredCount++;
+                    const userAns = selectedOption.value;
+
+                    if (userAns === keyCorrect) {
+                        score += 10;
+                        reviewDiv.classList.add('correct');
+                        reviewDiv.innerHTML = `<strong>✅ ${questionTexts[qKey]}</strong><br>Jawaban Anda: (${userAns}) - Tepat!`;
+                    } else {
+                        reviewDiv.classList.add('incorrect');
+                        reviewDiv.innerHTML = `<strong>❌ ${questionTexts[qKey]}</strong><br>Jawaban Anda: (${userAns}) | Kunci Jawaban: <strong>(${keyCorrect})</strong>`;
+                    }
+                } else {
+                    reviewDiv.classList.add('incorrect');
+                    reviewDiv.innerHTML = `<strong>⚠️ ${questionTexts[qKey]}</strong><br>Belum Dijawab | Kunci Jawaban: <strong>(${keyCorrect})</strong>`;
+                }
+
+                reviewContainer.appendChild(reviewDiv);
+            }
+
+            // Display Score & Badge
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const badgeContainer = document.getElementById('badgeContainer');
+            const resultCard = document.getElementById('resultCard');
+
+            scoreDisplay.textContent = score;
+
+            if (score >= 76) {
+                badgeContainer.innerHTML = `
+                    <span class="badge-status badge-success">🎉 Pengayaan (Selamat, Anda Sangat Memahami Hardware!)</span>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Kriteria Selesai: Anda siap melanjutkan ke materi perakitan fisik & CAD desain kriya kulit!</p>
+                `;
+            } else {
+                badgeContainer.innerHTML = `
+                    <span class="badge-status badge-warning">💪 Remedial (Ayo Semangat, Pelajari Lagi Materi!)</span>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Nilai Anda belum mencapai KKM (76). Silakan baca ulang halaman Materi & K3 lalu ulangi tes.</p>
+                `;
+            }
+
+            // Show Result
+            resultCard.style.display = 'block';
+            resultCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Reset Quiz State
+        function resetQuiz() {
+            document.getElementById('quizForm').reset();
+            document.getElementById('resultCard').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
